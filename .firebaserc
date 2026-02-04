@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "portfolio-adel-6aeaa"
+  },
+  "targets": {
+    "portfolio-adel-6aeaa": {
+      "hosting": {
+        "portfolio": [
+          "mansour-adel"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
