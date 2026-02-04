@@ -1,21 +1,11 @@
-import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faBriefcase,
   faCalendar,
   faMapMarkerAlt,
-  faCheckCircle,
-  faChevronDown
+  faCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 const Experience = () => {
-  const [expandedMissions, setExpandedMissions] = useState([0]);
-
-  const toggleMission = (mIdx) => {
-    setExpandedMissions(prev =>
-      prev.includes(mIdx) ? prev.filter(i => i !== mIdx) : [...prev, mIdx]
-    );
-  };
   const experiences = [
     {
       company: 'Accenture France',
@@ -141,31 +131,28 @@ const Experience = () => {
 
         {/* Timeline */}
         <div className="relative">
-          {/* Vertical Line */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary-500 via-primary-600 to-transparent"></div>
+          {/* Vertical Line - left side */}
+          <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary-500 via-primary-600 to-transparent"></div>
 
-          <div className="space-y-12">
+          <div className="space-y-10">
             {experiences.map((exp, index) => (
-              <div
-                key={index}
-                className={`relative flex flex-col md:flex-row gap-8 ${
-                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                }`}
-              >
+              <div key={index} className="relative flex gap-8 pl-16">
                 {/* Timeline Dot */}
-                <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 rounded-full
+                <div className="absolute left-[18px] top-8 w-5 h-5 rounded-full
                               bg-primary-500 border-4 border-white shadow-lg shadow-primary-500/50 z-10"></div>
 
-                {/* Content Card */}
-                <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:pr-12 ml-16 md:ml-0' : 'md:pl-12 ml-16 md:ml-0'}`}>
-                  <div className="glass-effect rounded-2xl p-8 card-hover group">
+                {/* Full-width Content Card */}
+                <div className="flex-1">
+                  <div className="glass-effect rounded-2xl p-8 transition-all duration-300
+                              hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary-500/20
+                              hover:border-primary-300 relative hover:z-10 group">
                     {/* Company & Role */}
                     <div className="space-y-3 mb-6">
                       <div className="flex items-start justify-between gap-4">
                         <h3 className="text-2xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
                           {exp.company}
                         </h3>
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium border ${
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium border whitespace-nowrap ${
                           exp.type === 'CDI'
                             ? 'bg-accent-50 text-accent-400 border-accent-200'
                             : 'glass-effect text-primary-600 border-primary-200'
@@ -188,55 +175,38 @@ const Experience = () => {
                       </div>
                     </div>
 
-                    {/* Missions (if multiple) */}
+                    {/* Missions (all visible) */}
                     {exp.missions ? (
-                      <div className="space-y-4 mb-6">
+                      <div className="space-y-5 mb-6">
                         {exp.missions.map((mission, mIdx) => (
                           <div key={mIdx} className="border-l-2 border-primary-300 pl-4">
-                            <button
-                              onClick={() => toggleMission(mIdx)}
-                              className="w-full text-left flex items-center justify-between gap-2 group/mission"
-                            >
-                              <div>
-                                <div className="font-semibold text-primary-700 group-hover/mission:text-primary-500 transition-colors">
-                                  {mission.title}
+                            <div className="font-semibold text-primary-700">
+                              {mission.title}
+                            </div>
+                            <div className="text-sm text-gray-500 mb-3">{mission.period}</div>
+                            <div className="space-y-2 mb-3">
+                              {mission.highlights.map((highlight, hIdx) => (
+                                <div key={hIdx} className="flex gap-2">
+                                  <FontAwesomeIcon
+                                    icon={faCheckCircle}
+                                    className="text-primary-600 mt-1 flex-shrink-0 text-sm"
+                                  />
+                                  <p className="text-gray-700 text-sm leading-relaxed">
+                                    {highlight}
+                                  </p>
                                 </div>
-                                <div className="text-sm text-gray-500">{mission.period}</div>
-                              </div>
-                              <FontAwesomeIcon
-                                icon={faChevronDown}
-                                className={`text-primary-400 text-xs transition-transform duration-300 flex-shrink-0 ${
-                                  expandedMissions.includes(mIdx) ? 'rotate-180' : ''
-                                }`}
-                              />
-                            </button>
-                            <div className={`overflow-hidden transition-all duration-300 ${
-                              expandedMissions.includes(mIdx) ? 'max-h-96 opacity-100 mt-3' : 'max-h-0 opacity-0'
-                            }`}>
-                              <div className="space-y-2 mb-3">
-                                {mission.highlights.map((highlight, hIdx) => (
-                                  <div key={hIdx} className="flex gap-2">
-                                    <FontAwesomeIcon
-                                      icon={faCheckCircle}
-                                      className="text-primary-600 mt-1 flex-shrink-0 text-sm"
-                                    />
-                                    <p className="text-gray-700 text-sm leading-relaxed">
-                                      {highlight}
-                                    </p>
-                                  </div>
-                                ))}
-                              </div>
-                              <div className="flex flex-wrap gap-2">
-                                {mission.tech.map((tech, tIdx) => (
-                                  <span
-                                    key={tIdx}
-                                    className="px-2 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-medium
-                                             border border-primary-200 hover:bg-primary-100 transition-colors"
-                                  >
-                                    {tech}
-                                  </span>
-                                ))}
-                              </div>
+                              ))}
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                              {mission.tech.map((tech, tIdx) => (
+                                <span
+                                  key={tIdx}
+                                  className="px-2 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-medium
+                                           border border-primary-200 hover:bg-primary-100 transition-colors"
+                                >
+                                  {tech}
+                                </span>
+                              ))}
                             </div>
                           </div>
                         ))}
@@ -274,9 +244,6 @@ const Experience = () => {
                     )}
                   </div>
                 </div>
-
-                {/* Empty space for alternating layout */}
-                <div className="hidden md:block md:w-1/2"></div>
               </div>
             ))}
           </div>
