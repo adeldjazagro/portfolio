@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope, faDownload, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faDownload, faFileAlt, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const Hero = () => {
   const scrollToSection = (sectionId) => {
@@ -58,6 +58,10 @@ const Hero = () => {
               <a href="/CV_BA_PO_ADEL_MANSOUR.pdf" download="CV_BA_PO_ADEL_MANSOUR.pdf" className="btn-secondary">
                 <FontAwesomeIcon icon={faDownload} className="mr-2" />
                 Télécharger CV
+              </a>
+              <a href="/DOSSIER_COMPETENCES_ADEL_MANSOUR.pdf" download="DOSSIER_COMPETENCES_ADEL_MANSOUR.pdf" className="btn-secondary">
+                <FontAwesomeIcon icon={faFileAlt} className="mr-2" />
+                Dossier de compétences
               </a>
             </div>
 
